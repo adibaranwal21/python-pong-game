@@ -142,7 +142,7 @@ def main():
     # do the same thing with the bottom
     if ball_rect.bottom > SCREEN_HEIGHT - ball_rect.height:
       ball_accel_y *= -1
-      ball_rect.top = SCREEN_HEIGHT - ball_rect.heigh
+      ball_rect.top = SCREEN_HEIGHT - ball_rect.height
 
     """
     if paddle_1_rect collides with the ball and the ball is in front of it,
@@ -161,6 +161,15 @@ def main():
       # move the ball
       ball_rect.left += ball_accel_x * delta_time
       ball_rect.top += ball_accel_y * delta_time
+    if paddle_1_rect.top < 0:
+      paddle_1_rect.top = 0
+    if paddle_1_rect.bottom > SCREEN_HEIGHT:
+      paddle_1_rect.bottom = SCREEN_HEIGHT
 
+    if paddle_2_rect.top < 0:
+      paddle_2_rect.top = 0
+    if paddle_2_rect.bottom > SCREEN_HEIGHT:
+      paddle_2_rect.bottom = SCREEN_HEIGHT
+      
 if __name__ == '__main__':
   main()
