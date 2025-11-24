@@ -39,9 +39,18 @@ def main():
 
   # randomize the direction of the ball
   if random.randint(1, 2) == 1:
-    ball_accel_x *= -1
+    ball_accel_x *= -1 # X-Coordinate of ball
   if random.randint(1, 2) == 1:
-    ball_accel_y *= -1
+    ball_accel_y *= -1 # Y-Coordinate of ball
+
+  clock = pygame.time.Clock() # Creates clock for game
+
+  """
+  This is to check whether or not to move the ball.
+  We will make it move after 3 seconds.
+  """
+  started = False
+  delta_time = clock.tick(60) #Sets up FPS of the game
 
   while True: # Game loop
     """
@@ -50,9 +59,39 @@ def main():
     """
     screen.fill(COLOR_BLACK)
 
+    # make the ball move after 3 seconds
+    if not started:
+    # load the Consolas font
+        font = pygame.font.SysFont('Consolas', 30)
+
+    # draw some text to the center of the screen
+    text = font.render('Press Space to Start', True, COLOR_WHITE)
+    text_rect = text.get_rect()
+    text_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+    screen.blit(text, text_rect)
+
+    # update the display
+    pygame.display.flip()
+
+    clock.tick(60)
+
     for event in pygame.event.get():
-      if event.type == pygame.QUIT: # If exited
-        return # Exit and finish
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            return
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                started = True
+      
+    # draw player 1 and player 2's paddle rects with the white color
+    pygame.draw.rect(screen, COLOR_WHITE, paddle_1_rect)
+    pygame.draw.rect(screen, COLOR_WHITE, paddle_2_rect)
+
+    # draw the ball with the white color
+    pygame.draw.rect(screen, COLOR_WHITE, ball_rect)
+
+    # update the display (this is necessary for Pygame)
+    pygame.display.update()
 
 if __name__ == '__main__':
   main()
